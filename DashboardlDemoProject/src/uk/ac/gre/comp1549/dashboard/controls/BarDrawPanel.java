@@ -32,7 +32,7 @@ public class BarDrawPanel extends JPanel {
      * Default constructor - sets default values
      */
     public BarDrawPanel() {
-        this(200, 20, 8, 100, 0);
+        this(20, 200, 20, 100, 0);
     }
 
     /**
@@ -68,15 +68,16 @@ public class BarDrawPanel extends JPanel {
         // Draw the bar itself.   The first 10% of the bar is red.  The last 30% is yellow.  Between 10% and 30% 
         // the colour graduates from red to yellow.   Check the API documentation for GradientPaint to see
         // how this works.
-        Rectangle2D barx = new Rectangle2D.Double(padding, padding, barLength, barHeight);
-        GradientPaint redtoyellow = new GradientPaint(0 + (float) barx.getWidth() * 0.1F, 0, Color.RED, (float) barx.getWidth() * 0.3F, 0, Color.YELLOW);
+        Rectangle2D barx = new Rectangle2D.Double(padding, padding,  barLength, barHeight);
+        GradientPaint redtoyellow = new GradientPaint(0, 0 + (float) barx.getHeight() * 0.6F, Color.YELLOW, 0, 0 + (float) barx.getHeight() * 0.85F, Color.RED);
         g2.setPaint(redtoyellow);
         g2.fill(barx);
 
         // draw the value indicator to show the current value
-        g2.setStroke(new BasicStroke(barLength/40, BasicStroke.CAP_SQUARE, 0));
-        g2.setPaint(Color.GRAY);
-        Line2D valueIndicator = new Line2D.Double(padding + (barLength * value / barMaxValue), padding/2F, padding + (barLength * value / barMaxValue), barHeight + (padding * 1.5F));
+        g2.setStroke(new BasicStroke(barHeight/80, BasicStroke.CAP_SQUARE, 0));
+        g2.setPaint(Color.BLACK);
+        Line2D valueIndicator = new Line2D.Double(padding/2F, padding - barHeight + (barHeight * barMaxValue / value), barLength + padding * 1.5F, padding - barHeight + (barHeight * barMaxValue / value));
+        //Line2D valueIndicator = new Line2D.Double(10, 110, 60, 110);
         g2.draw(valueIndicator);
     }
 
