@@ -11,4 +11,5 @@ package uk.ac.gre.comp1549.dashboard.controls;
  */
 public interface DialAngle {
     double calculateAngle();
+    String getName();
 }

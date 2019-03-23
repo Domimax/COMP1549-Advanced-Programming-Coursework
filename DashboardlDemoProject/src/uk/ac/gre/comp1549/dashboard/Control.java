@@ -10,5 +10,5 @@ package uk.ac.gre.comp1549.dashboard;
  * @author ms8794c
  */
 public interface Control {
-    //void setControl();
+    void setValue(int value);
 }

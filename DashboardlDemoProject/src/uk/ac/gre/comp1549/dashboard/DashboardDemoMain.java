@@ -29,7 +29,7 @@ import uk.ac.gre.comp1549.dashboard.scriptreader.DashboardEventGeneratorFromXML;
  * @author COMP1549
  * @version 2.0
  */
-public class DashboardDemoMain extends JFrame implements Control {
+public class DashboardDemoMain extends JFrame {
 
     /**
      * Name of the XML script file - change here if you want to use a different
@@ -38,7 +38,7 @@ public class DashboardDemoMain extends JFrame implements Control {
     public static final String XML_SCRIPT = "dashboard_script.xml";
 
     // fields that appear on the control panel
-    private JTextField txtSpeedValueInput;
+    private JTextField txtSpeedometerDrawValueInput;
     private JTextField txtPetrolValueInput;
     private JTextField txtAltimeterValueInput;
     private JTextField txtVariometerValueInput;
@@ -46,11 +46,11 @@ public class DashboardDemoMain extends JFrame implements Control {
     private JButton btnScript;
 
     // fields that appear on the dashboard itself
-    private Speedometer speedDial;
-    private Variometer variometerDial;
-    private PetrolVerticalBar petrolBar;
-    private Altimeter altimeterPanel;
-    private Tachometer tachometerDial;
+    private Panel<SpeedometerDraw> speedDial;
+    private Panel<VariometerDraw> variometerDial;
+    private Panel<PetrolVerticalBarDraw> petrolBar;
+    private Panel<AltimeterDraw> altimeterPanel;
+    private Panel<TachometerDraw> tachometerDial;
 
     /**
      * Constructor. Does maybe more work than is good for a constructor.
@@ -61,35 +61,61 @@ public class DashboardDemoMain extends JFrame implements Control {
         setLayout(new FlowLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // add the speed Dial
+        speedDial = new Panel<>(new SpeedometerDraw());
+        speedDial.setLabel("SPEED");
+        speedDial.setValue(0);
+
+        // add the tachometer Dial
+        tachometerDial = new Panel<>(new TachometerDraw());
+        tachometerDial.setLabel("TACHOMETER");
+        tachometerDial.setValue(0);
+
+        // add the variometer Dial
+        variometerDial = new Panel<>(new VariometerDraw());
+        variometerDial.setLabel("VARIOMETER");
+        variometerDial.setValue(0);
+        
+        // add the altimeter Panel
+        altimeterPanel = new Panel<>(new AltimeterDraw());
+        altimeterPanel.setLabel("ALTIMETER");
+        altimeterPanel.setValue(0);
+
+        
+        // add the petrol Bar
+        petrolBar = new Panel<>(new PetrolVerticalBarDraw());
+        petrolBar.setLabel("PETROL");
+        petrolBar.setValue(100);
+        
         JPanel panel = new JPanel();
         panel.add(new JLabel("Speed Value:"));
-        txtSpeedValueInput = new JTextField("0", 3);
-        panel.add(txtSpeedValueInput);
-        DocumentListener speedListener = new SpeedValueListener();
-        txtSpeedValueInput.getDocument().addDocumentListener(speedListener);
-        
+        txtSpeedometerDrawValueInput = new JTextField("0", 3);
+        panel.add(txtSpeedometerDrawValueInput);
+        DocumentListener speedListener = new ValueListener(speedDial);
+        txtSpeedometerDrawValueInput.getDocument().addDocumentListener(speedListener);
+
         panel.add(new JLabel("Petrol Value:"));
         txtPetrolValueInput = new JTextField("0", 3);
         panel.add(txtPetrolValueInput);
-        DocumentListener petrolListener = new PetrolValueListener();
+        DocumentListener petrolListener = new ValueListener(petrolBar);
         txtPetrolValueInput.getDocument().addDocumentListener(petrolListener);
 
         panel.add(new JLabel("Altimeter Value:"));
         txtAltimeterValueInput = new JTextField("0", 3);
         panel.add(txtAltimeterValueInput);
-        DocumentListener altimeterListener = new AltimeterValueListener();
+        DocumentListener altimeterListener = new ValueListener(altimeterPanel);
         txtAltimeterValueInput.getDocument().addDocumentListener(altimeterListener);
-        
+
         panel.add(new JLabel("Variometer Value:"));
         txtVariometerValueInput = new JTextField("0", 3);
         panel.add(txtVariometerValueInput);
-        DocumentListener variometerListener = new VariometerValueListener();
+        DocumentListener variometerListener = new ValueListener(variometerDial);
         txtVariometerValueInput.getDocument().addDocumentListener(variometerListener);
-        
+
         panel.add(new JLabel("Tachometer Value:"));
         txtTachometerValueInput = new JTextField("0", 3);
         panel.add(txtTachometerValueInput);
-        DocumentListener tachometerListener = new TachometerValueListener();
+        DocumentListener tachometerListener = new ValueListener(tachometerDial);
         txtTachometerValueInput.getDocument().addDocumentListener(tachometerListener);
 
         btnScript = new JButton("Run XML Script");
@@ -118,33 +144,10 @@ public class DashboardDemoMain extends JFrame implements Control {
         dashboard.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         dashboard.setLayout(new FlowLayout());
 
-        // add the speed Dial
-        speedDial = new Speedometer();
-        speedDial.setLabel("SPEED");
-        speedDial.setValue(0);
         dashboard.add(speedDial);
-        
-        tachometerDial = new Tachometer();
-        tachometerDial.setLabel("TACHOMETER");
-        tachometerDial.setValue(0);
         dashboard.add(tachometerDial);
-
-        // add the variometer Dial
-        variometerDial = new Variometer();
-        variometerDial.setLabel("VARIOMETER");
-        variometerDial.setValue(0);
         dashboard.add(variometerDial);
-
-        // add the altimeter Panel
-        altimeterPanel = new Altimeter();
-        altimeterPanel.setLabel("ALTIMETER");
-        altimeterPanel.setValue(0);
         dashboard.add(altimeterPanel);
-
-        // add the petrol Bar
-        petrolBar = new PetrolVerticalBar();
-        petrolBar.setLabel("PETROL");
-        petrolBar.setValue(100);
         dashboard.add(petrolBar);
         dashboard.pack();
 
@@ -185,7 +188,7 @@ public class DashboardDemoMain extends JFrame implements Control {
                 }
             };
             dbegXML.registerDashBoardEventListener("petrol", dbelPetril);
-            
+
             // Register for variometer events from the XML script file
             DashBoardEventListener dbelVariometer = new DashBoardEventListener() {
                 @Override
@@ -194,7 +197,7 @@ public class DashboardDemoMain extends JFrame implements Control {
                 }
             };
             dbegXML.registerDashBoardEventListener("variometer", dbelVariometer);
-            
+
             // Register for altimeter events from the XML script file
             DashBoardEventListener dbelAltimeter = new DashBoardEventListener() {
                 @Override
@@ -203,7 +206,7 @@ public class DashboardDemoMain extends JFrame implements Control {
                 }
             };
             dbegXML.registerDashBoardEventListener("altimeter", dbelAltimeter);
-            
+
             // Register for tachometer events from the XML script file
             DashBoardEventListener dbelTachometer = new DashBoardEventListener() {
                 @Override
@@ -221,149 +224,52 @@ public class DashboardDemoMain extends JFrame implements Control {
         }
     }
 
-    /**
-     * Set the speed value to the value entered in the textfield.
-     */
-    public void setSpeed() {
-        try {
-            int value = Integer.parseInt(txtSpeedValueInput.getText().trim());
-            speedDial.setValue(value);
-        } catch (NumberFormatException e) {
-        }
-        // don't set the speed if the input can't be parsed
-    }
+    private class ValueListener implements DocumentListener {
 
-    /**
-     * Set the petrol value to the value entered in the textfield.
-     */
-    public void setPetrol() {
-        try {
-            int value = Integer.parseInt(txtPetrolValueInput.getText().trim());
-            petrolBar.setValue(value);
-        } catch (NumberFormatException e) {
-        }
-        // don't set the speed if the input can't be parsed
-    }
-    
-    /**
-     * Set the petrol value to the value entered in the textfield.
-     */
-    public void setAltimeter() {
-        try {
-            int value = Integer.parseInt(txtAltimeterValueInput.getText().trim());
-            altimeterPanel.setValue(value);
-        } catch (NumberFormatException e) {
-        }
-        // don't set the speed if the input can't be parsed
-    }
-    
-    public void setVariometer() {
-        try {
-            int value = Integer.parseInt(txtVariometerValueInput.getText().trim());
-            variometerDial.setValue(value);
-        } catch (NumberFormatException e) {
-        }
-    }
-    
-    public void setTachometer() {
-        try {
-            int value = Integer.parseInt(txtTachometerValueInput.getText().trim());
-            tachometerDial.setValue(value);
-        } catch (NumberFormatException e) {
-        }
-    }
+        Panel currentControl;
 
-    /**
-     * Respond to user input in the Speed textfield
-     */
-    private class SpeedValueListener implements DocumentListener {
-
-        @Override
-        public void insertUpdate(DocumentEvent event) {
-            setSpeed();
+        public ValueListener(Panel currentControl) {
+            this.currentControl = currentControl;
         }
 
         @Override
-        public void removeUpdate(DocumentEvent event) {
-            setSpeed();
+        public void insertUpdate(DocumentEvent e) {
+            try {
+                int value;
+                switch (currentControl.drawClass.getClass().getSimpleName()) {
+                    case "SpeedometerDraw":
+                        value = Integer.parseInt(txtSpeedometerDrawValueInput.getText().trim());
+                        speedDial.setValue(value);
+                        break;
+                    case "TachometerDraw":
+                        value = Integer.parseInt(txtTachometerValueInput.getText().trim());
+                        tachometerDial.setValue(value);
+                        break;
+                    case "AltimeterDraw":
+                        value = Integer.parseInt(txtAltimeterValueInput.getText().trim());
+                        altimeterPanel.setValue(value);
+                        break;
+                    case "VariometerDraw":
+                        value = Integer.parseInt(txtVariometerValueInput.getText().trim());
+                        variometerDial.setValue(value);
+                        break;
+                    case "PetrolVerticalBarDraw":
+                        value = Integer.parseInt(txtPetrolValueInput.getText().trim());
+                        petrolBar.setValue(value);
+                        break;
+                }
+            } catch (NumberFormatException ex) {
+            }
         }
 
         @Override
-        public void changedUpdate(DocumentEvent event) {
-        }
-    }
-
-    /**
-     * Respond to user input in the Petrol textfield
-     */
-    private class PetrolValueListener implements DocumentListener {
-
-        @Override
-        public void insertUpdate(DocumentEvent event) {
-            setPetrol();
+        public void removeUpdate(DocumentEvent e) {
+            insertUpdate(e);
         }
 
         @Override
-        public void removeUpdate(DocumentEvent event) {
-            setPetrol();
-        }
+        public void changedUpdate(DocumentEvent e) {
 
-        @Override
-        public void changedUpdate(DocumentEvent event) {
-        }
-    }
-    
-    /**
-     * Respond to user input in the Petrol textfield
-     */
-    private class AltimeterValueListener implements DocumentListener {
-
-        @Override
-        public void insertUpdate(DocumentEvent event) {
-            setAltimeter();
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent event) {
-            setAltimeter();
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent event) {
-        }
-    }
-    
-    private class VariometerValueListener implements DocumentListener {
-
-        @Override
-        public void insertUpdate(DocumentEvent event) {
-            setVariometer();
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent event) {
-            setVariometer();
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent event) {
-        }
-    }
-    
-    private class TachometerValueListener implements DocumentListener {
-
-        @Override
-        public void insertUpdate(DocumentEvent event) {
-            setTachometer();
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent event) {
-            setTachometer();
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent event) {
         }
     }
 

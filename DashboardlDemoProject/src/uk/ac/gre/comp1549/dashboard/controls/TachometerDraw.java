@@ -5,13 +5,9 @@
  */
 package uk.ac.gre.comp1549.dashboard.controls;
 
-import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
 import uk.ac.gre.comp1549.dashboard.controls.abstracts.DialDraw;
 /**
  *
