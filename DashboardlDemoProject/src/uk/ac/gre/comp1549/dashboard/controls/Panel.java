@@ -19,7 +19,7 @@ import uk.ac.gre.comp1549.dashboard.controls.abstracts.ControlDraw;
  */
 public class Panel<T> extends JPanel implements Control {
 
-    public T drawClass;
+    private T drawClass;
     private JLabel lblTitle;
 
     /**
@@ -53,5 +53,9 @@ public class Panel<T> extends JPanel implements Control {
      */
     public void setLabel(String label) {
         lblTitle.setText(label);
+    }
+    
+    public T getDrawClass(){
+        return drawClass;
     }
 }

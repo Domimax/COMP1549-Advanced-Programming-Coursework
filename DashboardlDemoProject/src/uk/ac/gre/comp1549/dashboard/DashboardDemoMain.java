@@ -62,31 +62,16 @@ public class DashboardDemoMain extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // add the speed Dial
-        speedDial = new Panel<>(new SpeedometerDraw());
-        speedDial.setLabel("SPEED");
-        speedDial.setValue(0);
-
+        speedDial = (Panel) CommonCode.getInstance().createPanel(ControlDrawFactory.createControlDraw("Speedometer"), "SPEEDOMETER", 0);
         // add the tachometer Dial
-        tachometerDial = new Panel<>(new TachometerDraw());
-        tachometerDial.setLabel("TACHOMETER");
-        tachometerDial.setValue(0);
-
+        tachometerDial = (Panel) CommonCode.getInstance().createPanel(ControlDrawFactory.createControlDraw("Tachometer"), "TACHOMETER", 0);
         // add the variometer Dial
-        variometerDial = new Panel<>(new VariometerDraw());
-        variometerDial.setLabel("VARIOMETER");
-        variometerDial.setValue(0);
-        
+        variometerDial = (Panel) CommonCode.getInstance().createPanel(ControlDrawFactory.createControlDraw("Variometer"), "VARIOMETER", 0);
         // add the altimeter Panel
-        altimeterPanel = new Panel<>(new AltimeterDraw());
-        altimeterPanel.setLabel("ALTIMETER");
-        altimeterPanel.setValue(0);
-
-        
+        altimeterPanel = (Panel) CommonCode.getInstance().createPanel(ControlDrawFactory.createControlDraw("Altimeter"), "ALTIMETER", 0);
         // add the petrol Bar
-        petrolBar = new Panel<>(new PetrolVerticalBarDraw());
-        petrolBar.setLabel("PETROL");
-        petrolBar.setValue(100);
-        
+        petrolBar = (Panel) CommonCode.getInstance().createPanel(ControlDrawFactory.createControlDraw("PetrolVerticalBar"), "PETROL", 100);
+
         JPanel panel = new JPanel();
         panel.add(new JLabel("Speed Value:"));
         txtSpeedometerDrawValueInput = new JTextField("0", 3);
@@ -236,7 +221,7 @@ public class DashboardDemoMain extends JFrame {
         public void insertUpdate(DocumentEvent e) {
             try {
                 int value;
-                switch (currentControl.drawClass.getClass().getSimpleName()) {
+                switch (currentControl.getDrawClass().getClass().getSimpleName()) {
                     case "SpeedometerDraw":
                         value = Integer.parseInt(txtSpeedometerDrawValueInput.getText().trim());
                         speedDial.setValue(value);

@@ -18,6 +18,7 @@ public abstract class ControlDraw extends JPanel {
     protected int maxValue;
     protected int minValue;
     protected int value; // current value - where the hand will point
+    protected String name;
 
     @Override
     public void paintComponent(Graphics g){
