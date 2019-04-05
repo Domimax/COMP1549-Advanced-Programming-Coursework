@@ -72,4 +72,6 @@ public abstract class DialDraw extends ControlDraw {
         //     Draw the line
         g2.draw(new Line2D.Double(center, end));
     }
+    
+    protected abstract double calculateAngle();
 }

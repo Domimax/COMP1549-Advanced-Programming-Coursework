@@ -57,5 +57,5 @@ public class SpeedometerDraw extends DialDraw implements DialAngle {
     @Override
     public double calculateAngle(){      
         return Math.toRadians(225 - (value * (dialExtentDegrees / maxValue)));
-    }    
+    }  
 }
