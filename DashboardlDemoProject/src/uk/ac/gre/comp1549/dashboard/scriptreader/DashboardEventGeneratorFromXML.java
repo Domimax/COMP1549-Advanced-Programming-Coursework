@@ -6,6 +6,7 @@ import org.xml.sax.helpers.*;
 
 import java.util.*;
 import java.io.*;
+import java.lang.Thread.State;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.gre.comp1549.dashboard.events.*;
@@ -49,6 +50,8 @@ public class DashboardEventGeneratorFromXML extends DefaultHandler {
      */
     public final static int delayUnits = 100; // 1000 = 1 second
 
+    private boolean runQueue = true;
+
     // current event being processed
     private DashBoardEvent currentEvent = null;
     private String currentTag = ""; // current tag being processed
@@ -91,8 +94,8 @@ public class DashboardEventGeneratorFromXML extends DefaultHandler {
     /**
      * startElement() is called by the parser whenever a start tag (tag =
      * element) is encountered in the XML file. Store the tag's name and if it
- is an EVENT_tag create a new DashBoardEvent object that will be
- populated with data by the character() method
+     * is an EVENT_tag create a new DashBoardEvent object that will be populated
+     * with data by the character() method
      *
      * @param namespaceURI
      * @param localName - the name of the tag e.g. "dashboard_event"
@@ -166,18 +169,35 @@ public class DashboardEventGeneratorFromXML extends DefaultHandler {
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
 
-        if (localName.equals(EVENT_TAG)) {
+        if (Thread.activeCount() == 8) {
+            runQueue = false;
+            while (Thread.activeCount() != 2) {
+                if (Thread.activeCount() == 3) {
+                    runQueue = true;
+                    break;
+                }
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(DashboardEventGeneratorFromXML.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            if (localName.equals(EVENT_TAG)) {
             // get all listeners
             List<DashBoardEventListener> listeners = dashBoardListeners.getListeners(currentEvent.getType());
             if (listeners != null) {
                 // loop through the listeners passing the event object to them - this is "firing" the event
                 for (DashBoardEventListener dbel : listeners) {
-                    dbel.processDashBoardEvent(this, currentEvent);
+                    if (runQueue) {
+                        dbel.processDashBoardEvent(this, currentEvent);
+                    }
                 }
             }
             currentEvent = null;
         }
         currentTag = "";
+        }
     }
 
     /**
@@ -200,6 +220,7 @@ public class DashboardEventGeneratorFromXML extends DefaultHandler {
      * @param dbel - reference to the listener object
      */
     public void registerDashBoardEventListener(String type, DashBoardEventListener dbel) {
+        Deque queue;
         dashBoardListeners.addListener(type, dbel);
     }
 
@@ -244,8 +265,11 @@ public class DashboardEventGeneratorFromXML extends DefaultHandler {
     }
 
     /**
-     * main() method is only used if the class is run in standalone mode for testing purposes.
-     * @param args - last argument (args[length-1]) is the name of the xml file to process
+     * main() method is only used if the class is run in standalone mode for
+     * testing purposes.
+     *
+     * @param args - last argument (args[length-1]) is the name of the xml file
+     * to process
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
@@ -262,7 +286,7 @@ public class DashboardEventGeneratorFromXML extends DefaultHandler {
         if (filename == null) {
             usage();
         }
-        
+
         // Create an instance of DashboardEventGeneratorFromXML and test it
         DashboardEventGeneratorFromXML me = new DashboardEventGeneratorFromXML();
         DashBoardEventListener dbel = new DashBoardEventListener() {

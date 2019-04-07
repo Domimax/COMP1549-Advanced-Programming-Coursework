@@ -44,4 +44,12 @@ public abstract class ControlDraw extends JPanel {
     public int getValue(){
         return value;
     }
+    
+    public int getMaxValue() {
+        return maxValue;
+    }
+    
+    public int getMinValue() {
+        return minValue;
+    }
 }

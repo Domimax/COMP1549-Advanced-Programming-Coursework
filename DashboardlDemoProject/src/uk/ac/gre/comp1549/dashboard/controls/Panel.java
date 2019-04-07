@@ -47,6 +47,21 @@ public class Panel<T> extends JPanel implements Control {
         ((ControlDraw) drawClass).setValue(value);
     }
 
+    @Override
+    public int getValue() {
+        return ((ControlDraw) drawClass).getValue();
+    }
+
+    @Override
+    public int getMaxValue() {
+        return ((ControlDraw) drawClass).getMaxValue();
+    }
+
+    @Override
+    public int getMinValue() {
+        return ((ControlDraw) drawClass).getMinValue();
+    }
+
     /**
      *
      * @param label - label to appear above the dial
@@ -54,8 +69,8 @@ public class Panel<T> extends JPanel implements Control {
     public void setLabel(String label) {
         lblTitle.setText(label);
     }
-    
-    public T getDrawClass(){
+
+    public T getDrawClass() {
         return drawClass;
     }
 }

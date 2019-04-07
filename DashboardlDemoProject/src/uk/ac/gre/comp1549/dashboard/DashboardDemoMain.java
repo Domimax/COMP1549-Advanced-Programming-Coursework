@@ -1,15 +1,20 @@
 package uk.ac.gre.comp1549.dashboard;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -29,7 +34,7 @@ import uk.ac.gre.comp1549.dashboard.scriptreader.DashboardEventGeneratorFromXML;
  * @author COMP1549
  * @version 2.0
  */
-public class DashboardDemoMain extends JFrame {
+public class DashboardDemoMain extends JFrame implements ActionListener {
 
     /**
      * Name of the XML script file - change here if you want to use a different
@@ -45,6 +50,12 @@ public class DashboardDemoMain extends JFrame {
     private JTextField txtTachometerValueInput;
     private JButton btnScript;
 
+    private JButton speedometerButton;
+    private JButton tachometerButton;
+    private JButton variometerButton;
+    private JButton altimeterButton;
+    private JButton petrolButton;
+
     // fields that appear on the dashboard itself
     private Panel<SpeedometerDraw> speedDial;
     private Panel<VariometerDraw> variometerDial;
@@ -58,7 +69,6 @@ public class DashboardDemoMain extends JFrame {
     public DashboardDemoMain() {
         // Set up the frame for the controller
         setTitle("Dashboard demonstration controller");
-        setLayout(new FlowLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // add the speed Dial
@@ -76,32 +86,45 @@ public class DashboardDemoMain extends JFrame {
         panel.add(new JLabel("Speed Value:"));
         txtSpeedometerDrawValueInput = new JTextField("0", 3);
         panel.add(txtSpeedometerDrawValueInput);
-        DocumentListener speedListener = new ValueListener(speedDial);
-        txtSpeedometerDrawValueInput.getDocument().addDocumentListener(speedListener);
 
         panel.add(new JLabel("Petrol Value:"));
         txtPetrolValueInput = new JTextField("0", 3);
         panel.add(txtPetrolValueInput);
-        DocumentListener petrolListener = new ValueListener(petrolBar);
-        txtPetrolValueInput.getDocument().addDocumentListener(petrolListener);
 
         panel.add(new JLabel("Altimeter Value:"));
         txtAltimeterValueInput = new JTextField("0", 3);
         panel.add(txtAltimeterValueInput);
-        DocumentListener altimeterListener = new ValueListener(altimeterPanel);
-        txtAltimeterValueInput.getDocument().addDocumentListener(altimeterListener);
 
         panel.add(new JLabel("Variometer Value:"));
         txtVariometerValueInput = new JTextField("0", 3);
         panel.add(txtVariometerValueInput);
-        DocumentListener variometerListener = new ValueListener(variometerDial);
-        txtVariometerValueInput.getDocument().addDocumentListener(variometerListener);
 
         panel.add(new JLabel("Tachometer Value:"));
         txtTachometerValueInput = new JTextField("0", 3);
         panel.add(txtTachometerValueInput);
-        DocumentListener tachometerListener = new ValueListener(tachometerDial);
-        txtTachometerValueInput.getDocument().addDocumentListener(tachometerListener);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        speedometerButton = new JButton("Run speedometer");
+        speedometerButton.addActionListener(this);
+        speedometerButton.setActionCommand("speedometer");
+        tachometerButton = new JButton("Run tachometer");
+        tachometerButton.addActionListener(this);
+        tachometerButton.setActionCommand("tachometer");
+        variometerButton = new JButton("Run variometer");
+        variometerButton.addActionListener(this);
+        variometerButton.setActionCommand("variometer");
+        altimeterButton = new JButton("Run altimeter");
+        altimeterButton.addActionListener(this);
+        altimeterButton.setActionCommand("altimeter");
+        petrolButton = new JButton("Run petrolmeter");
+        petrolButton.addActionListener(this);
+        petrolButton.setActionCommand("petrolmeter");
+        buttonPanel.add(speedometerButton);
+        buttonPanel.add(tachometerButton);
+        buttonPanel.add(variometerButton);
+        buttonPanel.add(altimeterButton);
+        buttonPanel.add(petrolButton);
 
         btnScript = new JButton("Run XML Script");
 
@@ -110,6 +133,7 @@ public class DashboardDemoMain extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                disableControls();
                 new Thread() {
                     public void run() {
                         runXMLScript();
@@ -118,7 +142,8 @@ public class DashboardDemoMain extends JFrame {
             }
         });
         panel.add(btnScript);
-        add(panel);
+        add(panel, BorderLayout.NORTH);
+        add(buttonPanel, BorderLayout.CENTER);
         pack();
 
         setLocationRelativeTo(null); // display in centre of screen
@@ -160,7 +185,7 @@ public class DashboardDemoMain extends JFrame {
             DashBoardEventListener dbelSpeed = new DashBoardEventListener() {
                 @Override
                 public void processDashBoardEvent(Object originator, DashBoardEvent dbe) {
-                    speedDial.setValue(Integer.parseInt(dbe.getValue()));
+                    threadManagement(speedDial, Integer.parseInt(dbe.getValue()));
                 }
             };
             dbegXML.registerDashBoardEventListener("speed", dbelSpeed);
@@ -169,7 +194,7 @@ public class DashboardDemoMain extends JFrame {
             DashBoardEventListener dbelPetril = new DashBoardEventListener() {
                 @Override
                 public void processDashBoardEvent(Object originator, DashBoardEvent dbe) {
-                    petrolBar.setValue(Integer.parseInt(dbe.getValue()));
+                    threadManagement(petrolBar, Integer.parseInt(dbe.getValue()));
                 }
             };
             dbegXML.registerDashBoardEventListener("petrol", dbelPetril);
@@ -178,7 +203,7 @@ public class DashboardDemoMain extends JFrame {
             DashBoardEventListener dbelVariometer = new DashBoardEventListener() {
                 @Override
                 public void processDashBoardEvent(Object originator, DashBoardEvent dbe) {
-                    variometerDial.setValue(Integer.parseInt(dbe.getValue()));
+                    threadManagement(variometerDial, Integer.parseInt(dbe.getValue()));
                 }
             };
             dbegXML.registerDashBoardEventListener("variometer", dbelVariometer);
@@ -187,7 +212,7 @@ public class DashboardDemoMain extends JFrame {
             DashBoardEventListener dbelAltimeter = new DashBoardEventListener() {
                 @Override
                 public void processDashBoardEvent(Object originator, DashBoardEvent dbe) {
-                    altimeterPanel.setValue(Integer.parseInt(dbe.getValue()));
+                    threadManagement(altimeterPanel, Integer.parseInt(dbe.getValue()));
                 }
             };
             dbegXML.registerDashBoardEventListener("altimeter", dbelAltimeter);
@@ -196,65 +221,86 @@ public class DashboardDemoMain extends JFrame {
             DashBoardEventListener dbelTachometer = new DashBoardEventListener() {
                 @Override
                 public void processDashBoardEvent(Object originator, DashBoardEvent dbe) {
-                    tachometerDial.setValue(Integer.parseInt(dbe.getValue()));
+                    threadManagement(tachometerDial, Integer.parseInt(dbe.getValue()));
                 }
             };
             dbegXML.registerDashBoardEventListener("tachometer", dbelTachometer);
 
             // Process the script file - it willgenerate events as it runs
             dbegXML.processScriptFile(XML_SCRIPT);
+            enableControls();
 
         } catch (Exception ex) {
             Logger.getLogger(DashboardDemoMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private class ValueListener implements DocumentListener {
-
-        Panel currentControl;
-
-        public ValueListener(Panel currentControl) {
-            this.currentControl = currentControl;
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int value;
+        if ("speedometer".equals(e.getActionCommand())) {
+            value = Integer.parseInt(txtSpeedometerDrawValueInput.getText());
+            threadManagement(speedDial, value, speedometerButton);
         }
+        if ("tachometer".equals(e.getActionCommand())) {
+            value = Integer.parseInt(txtTachometerValueInput.getText());
+            threadManagement(tachometerDial, value, tachometerButton);
+        }
+        if ("variometer".equals(e.getActionCommand())) {
+            value = Integer.parseInt(txtVariometerValueInput.getText());
+            threadManagement(variometerDial, value, variometerButton);
+        }
+        if ("altimeter".equals(e.getActionCommand())) {
+            value = Integer.parseInt(txtAltimeterValueInput.getText());
+            threadManagement(altimeterPanel, value, altimeterButton);
+        }
+        if ("petrolmeter".equals(e.getActionCommand())) {
+            value = Integer.parseInt(txtPetrolValueInput.getText());
+            threadManagement(petrolBar, value, petrolButton);
+        }
+    }
 
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            try {
-                int value;
-                switch (currentControl.getDrawClass().getClass().getSimpleName()) {
-                    case "SpeedometerDraw":
-                        value = Integer.parseInt(txtSpeedometerDrawValueInput.getText().trim());
-                        speedDial.setValue(value);
-                        break;
-                    case "TachometerDraw":
-                        value = Integer.parseInt(txtTachometerValueInput.getText().trim());
-                        tachometerDial.setValue(value);
-                        break;
-                    case "AltimeterDraw":
-                        value = Integer.parseInt(txtAltimeterValueInput.getText().trim());
-                        altimeterPanel.setValue(value);
-                        break;
-                    case "VariometerDraw":
-                        value = Integer.parseInt(txtVariometerValueInput.getText().trim());
-                        variometerDial.setValue(value);
-                        break;
-                    case "PetrolVerticalBarDraw":
-                        value = Integer.parseInt(txtPetrolValueInput.getText().trim());
-                        petrolBar.setValue(value);
-                        break;
+    private void threadManagement(Panel control, int value, JButton button) {
+        if (value != control.getValue()) {
+            if (value > control.getMaxValue()) {
+                value = control.getMaxValue();
+            }
+            if (value < control.getMinValue()) {
+                value = control.getMinValue();
+            }
+            new ThreadEvent(control.getValue(), value, control, button).start();
+        }
+    }
+
+    private void threadManagement(Panel control, int value) {
+        if (value != control.getValue()) {
+            if (value > control.getMaxValue()) {
+                value = control.getMaxValue();
+            }
+            if (value < control.getMinValue()) {
+                value = control.getMinValue();
+            }
+            new ThreadEvent(control.getValue(), value, control, null).start();
+        }
+    }
+
+    private void disableControls() {
+        for (Component c : this.getContentPane().getComponents()) {
+            for (Component c1 : ((JPanel) c).getComponents()) {
+                if (c1 instanceof JButton) {
+                    c1.setEnabled(false);
                 }
-            } catch (NumberFormatException ex) {
             }
         }
-
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            insertUpdate(e);
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-
+    }
+    
+    private void enableControls() {
+        for (Component c : this.getContentPane().getComponents()) {
+            for (Component c1 : ((JPanel) c).getComponents()) {
+                if (c1 instanceof JButton) {
+                    c1.setEnabled(true);
+                }
+            }
         }
     }
 

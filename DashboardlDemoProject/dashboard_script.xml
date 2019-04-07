@@ -3,176 +3,62 @@
 <dashboard_script>
 	<dashboard_event>
 		<type>speed</type>
+		<value>100</value>
+	</dashboard_event>
+	<dashboard_event>
+		<type>petrol</type>
 		<value>5</value>
 	</dashboard_event>
-	<dashboard_event>
-		<type>petrol</type>
-		<value>95</value>
-	</dashboard_event>
         <dashboard_event>
 		<type>variometer</type>
-		<value>0</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>altimeter</type>
-		<value>0</value>
-	</dashboard_event>
-	<delay>5</delay>
-	<dashboard_event>
-		<type>speed</type>
-		<value>10</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>petrol</type>
-		<value>93</value>
-	</dashboard_event>
-	<delay>5</delay>
-	<dashboard_event>
-		<type>speed</type>
-		<value>20</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>petrol</type>
-		<value>91</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>speed</type>
-		<value>40</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>petrol</type>
-		<value>89</value>
+		<value>47</value>
 	</dashboard_event>
         <dashboard_event>
-		<type>variometer</type>
-		<value>5</value>
-	</dashboard_event>
-	<dashboard_event>
 		<type>altimeter</type>
-		<value>50</value>
-	</dashboard_event>
-	<delay>5</delay>
-	<dashboard_event>
-		<type>speed</type>
-		<value>45</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>petrol</type>
-		<value>87</value>
+		<value>1597</value>
 	</dashboard_event>
         <dashboard_event>
-		<type>variometer</type>
-		<value>10</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>altimeter</type>
-		<value>150</value>
-	</dashboard_event>
-	<delay>5</delay>
-	<dashboard_event>
-		<type>speed</type>
-		<value>40</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>petrol</type>
+		<type>tachometer</type>
 		<value>85</value>
 	</dashboard_event>
         <dashboard_event>
-		<type>variometer</type>
-		<value>20</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>altimeter</type>
-		<value>350</value>
-	</dashboard_event>
-	<delay>5</delay>
-	<dashboard_event>
 		<type>speed</type>
-		<value>45</value>
+		<value>78</value>
 	</dashboard_event>
 	<dashboard_event>
 		<type>petrol</type>
-		<value>81</value>
+		<value>0</value>
 	</dashboard_event>
         <dashboard_event>
 		<type>variometer</type>
-		<value>30</value>
+		<value>15</value>
 	</dashboard_event>
-	<dashboard_event>
+        <dashboard_event>
 		<type>altimeter</type>
-		<value>650</value>
+		<value>1000</value>
 	</dashboard_event>
-	<delay>5</delay>
-	<dashboard_event>
+        <dashboard_event>
+		<type>tachometer</type>
+		<value>10</value>
+	</dashboard_event>
+        <dashboard_event>
 		<type>speed</type>
-		<value>50</value>
+		<value>100</value>
 	</dashboard_event>
 	<dashboard_event>
 		<type>petrol</type>
-		<value>77</value>
+		<value>0</value>
 	</dashboard_event>
         <dashboard_event>
 		<type>variometer</type>
-		<value>40</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>altimeter</type>
-		<value>1050</value>
-	</dashboard_event>
-	<delay>5</delay>
-	<dashboard_event>
-		<type>speed</type>
-		<value>45</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>petrol</type>
-		<value>73</value>
+		<value>38</value>
 	</dashboard_event>
         <dashboard_event>
-		<type>variometer</type>
-		<value>50</value>
-	</dashboard_event>
-	<dashboard_event>
 		<type>altimeter</type>
-		<value>1550</value>
-	</dashboard_event>
-	<delay>5</delay>
-	<dashboard_event>
-		<type>speed</type>
-		<value>50</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>petrol</type>
-		<value>68</value>
+		<value>1250</value>
 	</dashboard_event>
         <dashboard_event>
-		<type>variometer</type>
-		<value>50</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>altimeter</type>
-		<value>2050</value>
-	</dashboard_event>
-	<delay>5</delay>
-	<dashboard_event>
-		<type>speed</type>
-		<value>55</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>petrol</type>
-		<value>62</value>
-	</dashboard_event>
-        <dashboard_event>
-		<type>variometer</type>
-		<value>50</value>
-	</dashboard_event>
-	<dashboard_event>
-		<type>altimeter</type>
-		<value>2550</value>
-	</dashboard_event>
-	<delay>5</delay>
-	<dashboard_event>
-		<type>speed</type>
-		<value>60</value>
+		<type>tachometer</type>
+		<value>47</value>
 	</dashboard_event>
 </dashboard_script>

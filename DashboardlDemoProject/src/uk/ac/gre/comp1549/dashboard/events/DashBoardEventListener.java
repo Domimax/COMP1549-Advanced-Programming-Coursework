@@ -5,6 +5,5 @@ package uk.ac.gre.comp1549.dashboard.events;
  * @author COMP1549
  */
 public interface DashBoardEventListener {
-    public void processDashBoardEvent(Object originator, DashBoardEvent dbe);
-    
+    public void processDashBoardEvent(Object originator, DashBoardEvent dbe);    
 }

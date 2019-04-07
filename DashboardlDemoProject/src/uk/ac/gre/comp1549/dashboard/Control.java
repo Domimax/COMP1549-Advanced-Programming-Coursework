@@ -11,4 +11,7 @@ package uk.ac.gre.comp1549.dashboard;
  */
 public interface Control {
     void setValue(int value);
+    int getValue();
+    int getMaxValue();
+    int getMinValue();
 }
