@@ -11,20 +11,22 @@ public class ThreadEvent extends Thread {
     private int oldValue; // integer for old control's value
     private int newValue; // integer for new control's value
     private Panel controlObject; // control object to create thread for
-    private JButton button; // JButton component to be disabled on the Thread runtime
+    private JButton button, scriptBtn; // JButton component to be disabled on the Thread runtime
 
     /**
      * @param oldValue - integer for old control's value
      * @param newValue - integer for new control's value
      * @param controlObject - control object to create thread for
      * @param button - JButton component to be disabled on the Thread runtime
+     * @param scriptBtn - JButton component to be disabled on the Thread runtime
      * Constructor method for ThreadEvent class
      */
-    public ThreadEvent(int oldValue, int newValue, Panel controlObject, JButton button) {
+    public ThreadEvent(int oldValue, int newValue, Panel controlObject, JButton button, JButton scriptBtn) {
         this.oldValue = oldValue;
         this.newValue = newValue;
         this.controlObject = controlObject;
         this.button = button;
+        this.scriptBtn = scriptBtn;
     }
 
     /**
@@ -35,6 +37,7 @@ public class ThreadEvent extends Thread {
         // disables JButton component if it was initialized on object creation
         if (button != null) {
             button.setEnabled(false);
+            scriptBtn.setEnabled(false);
         }
         // sets different value for Altimiter display control
         int value = 1;
@@ -77,6 +80,7 @@ public class ThreadEvent extends Thread {
         // enables JButton component if it was initialized on object creation
         if (button != null) {
             button.setEnabled(true);
+            scriptBtn.setEnabled(true);
         }
     }
 

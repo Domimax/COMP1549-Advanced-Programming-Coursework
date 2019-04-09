@@ -293,7 +293,7 @@ public class DashboardDemoMain extends JFrame implements ActionListener {
             if (value < control.getMinValue()) {
                 value = control.getMinValue();
             }
-            new ThreadEvent(control.getValue(), value, control, button).start();
+            new ThreadEvent(control.getValue(), value, control, button, btnScript).start();
         }
     }
 
@@ -310,7 +310,7 @@ public class DashboardDemoMain extends JFrame implements ActionListener {
             if (value < control.getMinValue()) {
                 value = control.getMinValue();
             }
-            new ThreadEvent(control.getValue(), value, control, null).start();
+            new ThreadEvent(control.getValue(), value, control, null, null).start();
         }
     }
 
