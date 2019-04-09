@@ -163,7 +163,7 @@ public class DashboardDemoMain extends JFrame implements ActionListener {
 
         // Set up the dashboard screen        
         JFrame dashboard = new JFrame("Demo dashboard");
-        dashboard.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        dashboard.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         dashboard.setLayout(new FlowLayout());
 
         dashboard.add(speedDial);
