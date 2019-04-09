@@ -6,14 +6,11 @@ import java.awt.Graphics2D;
 
 import uk.ac.gre.comp1549.dashboard.controls.abstracts.DialDraw;
 
-/**
- * DialDrawPanel. Draw a dial and indicate current value.
- *
- * @author COMP1549
- * @version 2.0
- */
+/*
+* Dial control class for Speedometer which inherits from abstract class DialDraw
+* and implements DialAngle interface
+*/
 public class SpeedometerDraw extends DialDraw implements DialAngle {
-
     /**
      * Default constructor - sets default values
      */
@@ -24,8 +21,12 @@ public class SpeedometerDraw extends DialDraw implements DialAngle {
     /**
      * @param radius - radius of the dial
      * @param padding - padding outside the dial
-     * @param dialMaxValue - dial runs from 0 to dialMaxValue
+     * @param dialMaxValue - maximum possible value of the control
+     * @param dialMinValue - minimum possible value of the control
      * @param value - current value - where the hand will point
+     * @param degrees1 - degrees value of the dial
+     * @param degrees2 - degrees point where the dial is started to draw
+     * Constructor method of SpeedometerDraw class to set values
      */
     public SpeedometerDraw(int radius, int padding, int dialMaxValue, int dialMinValue, int value,  float degrees1, float degrees2) {
         // set size of the JPanel to be big enough to hold the dial plus padding
@@ -54,6 +55,9 @@ public class SpeedometerDraw extends DialDraw implements DialAngle {
         drawHand(g2, calculateAngle(), handLength);
     }
 
+    /**
+     * This method is called every time when the paintComponent is called
+     */
     @Override
     public double calculateAngle(){      
         return Math.toRadians(225 - (value * (dialExtentDegrees / maxValue)));

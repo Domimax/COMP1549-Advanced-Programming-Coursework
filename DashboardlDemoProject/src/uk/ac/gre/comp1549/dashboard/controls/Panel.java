@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.gre.comp1549.dashboard.controls;
 
 import java.awt.BorderLayout;
@@ -13,10 +8,7 @@ import javax.swing.border.BevelBorder;
 import uk.ac.gre.comp1549.dashboard.Control;
 import uk.ac.gre.comp1549.dashboard.controls.abstracts.ControlDraw;
 
-/**
- *
- * @author ms8794c
- */
+
 public class Panel<T> extends JPanel implements Control {
 
     private T drawClass;
@@ -38,7 +30,7 @@ public class Panel<T> extends JPanel implements Control {
     }
 
     /**
-     * Set the value for the bar
+     * Set the value for the control
      *
      * @param value - value for the bar
      */
@@ -47,29 +39,41 @@ public class Panel<T> extends JPanel implements Control {
         ((ControlDraw) drawClass).setValue(value);
     }
 
+    /**
+     * Method to get value of the control 
+     */
     @Override
     public int getValue() {
         return ((ControlDraw) drawClass).getValue();
     }
 
+    /**
+     * Method to get maximum value of the control 
+     */
     @Override
     public int getMaxValue() {
         return ((ControlDraw) drawClass).getMaxValue();
     }
 
+    /**
+     * Method to get minimum value of the control 
+     */
     @Override
     public int getMinValue() {
         return ((ControlDraw) drawClass).getMinValue();
     }
 
     /**
-     *
      * @param label - label to appear above the dial
+     * Method to set text for control's label
      */
     public void setLabel(String label) {
         lblTitle.setText(label);
     }
 
+    /**
+     * Method to get control's instance
+     */
     public T getDrawClass() {
         return drawClass;
     }

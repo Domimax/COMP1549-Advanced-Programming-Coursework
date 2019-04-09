@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.gre.comp1549.dashboard.controls.abstracts;
 
 import java.awt.BasicStroke;
@@ -14,14 +9,17 @@ import java.awt.font.TextAttribute;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedString;
 
-/**
- *
- * @author ms8794c
- */
+// Abstract class for display control types that inherits from ControlDraw
 public abstract class DisplayDraw extends ControlDraw {
     
-    protected int length;
+    protected int length; // line length of the display
     
+    /**
+     * This method is called every time the Display needs drawing for instance
+     * when the value has changed.  It draws the display itself and the hand in the
+     * correct position to indicate the current value
+     * @param g - graphics object used to draw on the JPanel
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

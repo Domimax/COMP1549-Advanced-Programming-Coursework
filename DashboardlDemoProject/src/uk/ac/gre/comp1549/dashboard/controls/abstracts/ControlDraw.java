@@ -1,22 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.gre.comp1549.dashboard.controls.abstracts;
 
 import java.awt.Graphics;
 import javax.swing.*;
 
-/**
- *
- * @author ms8794c
- */
+// Abstract class for all control types that inherits from JPanel
 public abstract class ControlDraw extends JPanel {
 
     protected int padding; // padding outside the dial
-    protected int maxValue;
-    protected int minValue;
+    protected int maxValue; // maximum value of the control
+    protected int minValue; // minimum value of the control
     protected int value; // current value - where the hand will point
 
     @Override
@@ -30,7 +22,7 @@ public abstract class ControlDraw extends JPanel {
      * @param value value
      */
     public void setValue(int value) {
-        // don't let the value go over the maximum for the dial.  But what about the minimum?
+        // value cannot go below minimum or above maximum
         if (value >= maxValue){
             this.value = maxValue;
         } else if (value <= minValue) {
@@ -41,14 +33,23 @@ public abstract class ControlDraw extends JPanel {
         repaint();
     }
     
+    /**
+     * Method to get value of the control 
+     */
     public int getValue(){
         return value;
     }
     
+    /**
+     * Method to get maximum value of the control 
+     */
     public int getMaxValue() {
         return maxValue;
     }
     
+    /**
+     * Method to get minimum value of the control 
+     */
     public int getMinValue() {
         return minValue;
     }

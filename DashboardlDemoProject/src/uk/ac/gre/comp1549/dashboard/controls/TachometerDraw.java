@@ -1,20 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.gre.comp1549.dashboard.controls;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import uk.ac.gre.comp1549.dashboard.controls.abstracts.DialDraw;
-/**
- *
- * @author ms8794c
- */
+
+/*
+* Dial control class for Tachometer which inherits from abstract class DialDraw
+* and implements DialAngle interface
+*/
 public class TachometerDraw extends DialDraw implements DialAngle {
-    
     /**
      * Default constructor - sets default values
      */
@@ -25,8 +20,12 @@ public class TachometerDraw extends DialDraw implements DialAngle {
     /**
      * @param radius - radius of the dial
      * @param padding - padding outside the dial
-     * @param dialMaxValue - dial runs from 0 to dialMaxValue
+     * @param dialMaxValue - maximum possible value of the control
+     * @param dialMinValue - minimum possible value of the control
      * @param value - current value - where the hand will point
+     * @param degrees1 - degrees value of the dial
+     * @param degrees2 - degrees point where the dial is started to draw
+     * Constructor method of TachometerDraw class to set values
      */
     public TachometerDraw(int radius, int padding, int dialMaxValue, int dialMinValue, int value, float degrees1, float degrees2) {
         // set size of the JPanel to be big enough to hold the dial plus padding
@@ -55,6 +54,9 @@ public class TachometerDraw extends DialDraw implements DialAngle {
         drawHand(g2, calculateAngle(), handLength);
     }
 
+    /**
+     * This method is called every time when the paintComponent is called
+     */
     @Override
     public double calculateAngle(){      
         return Math.toRadians(180 - (value * (dialExtentDegrees / maxValue)));

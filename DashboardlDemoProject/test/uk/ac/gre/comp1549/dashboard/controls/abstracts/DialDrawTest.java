@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uk.ac.gre.comp1549.dashboard.controls.abstracts;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,10 +8,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import uk.ac.gre.comp1549.dashboard.controls.TachometerDraw;
 
-/**
- *
- * @author ms8794c
- */
 public class DialDrawTest {
 
     public DialDrawTest() {
@@ -53,6 +42,9 @@ public class DialDrawTest {
         assertEquals(result, expResult, 0.0001);
     }
     
+    /**
+     * Test of calculateAngle method, of class DialDraw.
+     */
     @Test
     public void testCalculateAngle2() {
         System.out.println("calculateAngle2");
@@ -63,6 +55,9 @@ public class DialDrawTest {
         assertEquals(result, expResult, 0.0001);
     }
     
+    /**
+     * Test of calculateAngle method, of class DialDraw.
+     */
     @Test
     public void testCalculateAngle3() {
         System.out.println("calculateAngle3");
@@ -73,6 +68,9 @@ public class DialDrawTest {
         assertEquals(result, expResult, 0.0001);
     }
     
+    /**
+     * Test of calculateAngle method, of class DialDraw.
+     */
     @Test
     public void testCalculateAngle4() {
         System.out.println("calculateAngle4");
@@ -83,6 +81,9 @@ public class DialDrawTest {
         assertEquals(result, expResult, 0.0001);
     }
     
+    /**
+     * Test of calculateAngle method, of class DialDraw.
+     */
     @Test
     public void testCalculateAngle5() {
         System.out.println("calculateAngle5");

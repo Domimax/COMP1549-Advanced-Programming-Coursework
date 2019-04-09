@@ -6,7 +6,6 @@ import org.xml.sax.helpers.*;
 
 import java.util.*;
 import java.io.*;
-import java.lang.Thread.State;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.gre.comp1549.dashboard.events.*;
@@ -42,6 +41,9 @@ public class DashboardEventGeneratorFromXML extends DefaultHandler {
      * XML tag used to indicate the a time delay in the script
      */
     public final static String DELAY_TAG = "delay";
+    
+    // Variable to define amount of controls
+    public final static int CONTROLS_COUNT = 5;
 
     /**
      * How many milliseconds each unit in a delay element is to cause the script
@@ -169,7 +171,9 @@ public class DashboardEventGeneratorFromXML extends DefaultHandler {
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
 
-        if (Thread.activeCount() == 8) {
+        // If all controls are already running in their threads, following lines
+        // of the script file will not be read
+        if (Thread.activeCount() == 3 + CONTROLS_COUNT) {
             runQueue = false;
             while (Thread.activeCount() != 2) {
                 if (Thread.activeCount() == 3) {
