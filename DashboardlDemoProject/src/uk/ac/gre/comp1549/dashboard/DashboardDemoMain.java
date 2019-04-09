@@ -84,25 +84,25 @@ public class DashboardDemoMain extends JFrame implements ActionListener {
         txtSpeedometerDrawValueInput = new JTextField("0", 3);
         panel.add(txtSpeedometerDrawValueInput);
 
-        // add textbox to type in PetrolBar value
-        panel.add(new JLabel("Petrol Value:"));
-        txtPetrolValueInput = new JTextField("0", 3);
-        panel.add(txtPetrolValueInput);
-
-        // add textbox to type in Altimiter value
-        panel.add(new JLabel("Altimeter Value:"));
-        txtAltimeterValueInput = new JTextField("0", 3);
-        panel.add(txtAltimeterValueInput);
+        // add textbox to type in Tachometer value
+        panel.add(new JLabel("Tachometer Value:"));
+        txtTachometerValueInput = new JTextField("0", 3);
+        panel.add(txtTachometerValueInput);
 
         // add textbox to type in Variometer value
         panel.add(new JLabel("Variometer Value:"));
         txtVariometerValueInput = new JTextField("0", 3);
         panel.add(txtVariometerValueInput);
 
-        // add textbox to type in Tachometer value
-        panel.add(new JLabel("Tachometer Value:"));
-        txtTachometerValueInput = new JTextField("0", 3);
-        panel.add(txtTachometerValueInput);
+        // add textbox to type in Altimiter value
+        panel.add(new JLabel("Altimeter Value:"));
+        txtAltimeterValueInput = new JTextField("0", 3);
+        panel.add(txtAltimeterValueInput);
+
+        // add textbox to type in PetrolBar value
+        panel.add(new JLabel("Petrol Value:"));
+        txtPetrolValueInput = new JTextField("0", 3);
+        panel.add(txtPetrolValueInput);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
@@ -133,10 +133,10 @@ public class DashboardDemoMain extends JFrame implements ActionListener {
         tachometerButton.setActionCommand("tachometer");
 
         buttonPanel.add(speedometerButton);
-        buttonPanel.add(petrolButton);
-        buttonPanel.add(altimeterButton);
-        buttonPanel.add(variometerButton);
         buttonPanel.add(tachometerButton);
+        buttonPanel.add(variometerButton);
+        buttonPanel.add(altimeterButton);
+        buttonPanel.add(petrolButton);
 
         btnScript = new JButton("Run XML Script");
 
@@ -179,7 +179,7 @@ public class DashboardDemoMain extends JFrame implements ActionListener {
         int wControl = this.getWidth(); // width of control frame (this)
         int hDash = dashboard.getHeight(); // height of dashboard frame 
         int wDash = dashboard.getWidth(); // width of dashboard frame 
-        
+
         // calculate where top left of the dashboard goes to centre it over the control frame
         Point p2 = new Point((int) topLeft.getX() - (wDash - wControl) / 2, (int) topLeft.getY() - (hDash + hControl));
         dashboard.setLocation(p2);
@@ -250,7 +250,8 @@ public class DashboardDemoMain extends JFrame implements ActionListener {
 
     /**
      * Action listener method
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -278,7 +279,7 @@ public class DashboardDemoMain extends JFrame implements ActionListener {
     }
 
     /**
-     * 
+     *
      * @param control - control to run thread for
      * @param value - new value of the control
      * @param button - JButton to be disabled in the runtime of the thread
@@ -296,10 +297,10 @@ public class DashboardDemoMain extends JFrame implements ActionListener {
         }
     }
 
-    /** 
+    /**
      * @param control - control to run thread for
-     * @param value - new value of the control
-     * Method to manage new threads creation according to the value set
+     * @param value - new value of the control Method to manage new threads
+     * creation according to the value set
      */
     private void threadManagement(Panel control, int value) {
         if (value != control.getValue()) {
